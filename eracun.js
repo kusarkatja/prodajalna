@@ -181,10 +181,13 @@ streznik.get('/izpisiRacun/:oblika', function(zahteva, odgovor) {
         zato računa ni mogoče pripraviti!</p>");
     } else {
       odgovor.setHeader('content-type', 'text/xml');
-      odgovor.render('eslog', {
-        vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
-        postavkeRacuna: pesmi
-      })  
+      vrniStranke(function(napaka1, stranka){
+        odgovor.render('eslog', {
+          vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
+          postavkeRacuna: pesmi,
+          stranka: stranka[zahteva.session.atm-1]
+        })
+      })
     }
   })
 })
